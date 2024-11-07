@@ -223,11 +223,11 @@ public:
 
 int main()
 {
-	RAM myRAM{ 16.0, 3200 };
-	VideoCard myVideo{ "RTX 3060", 6.0 };
-	Battery myBattery{ "BatteryModel", 3.7 };
-	Mouse myMouse {"Logitech", 3};
-	Laptop myLaptop("Dell XPS", "Intel", 11, 1920, 15, &myRAM, &myVideo, &myBattery, &myMouse, "Precision", 12.5);
+	RAM myRAM{ 15.2, 3200 };
+	VideoCard myVideo{ "RTX 3060", 3.6 };
+	Battery myBattery{ "Battery 1", 3.7 };
+	Mouse myMouse {"Mouse2", 3};
+	Laptop myLaptop("Aorus", "Intel", 11, 1920, 15, &myRAM, &myVideo, &myBattery, &myMouse, "TouchPad2", 12.5);
 	myLaptop.Show();
 
 	return 0;
