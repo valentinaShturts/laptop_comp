@@ -174,49 +174,61 @@ class Laptop
 	Battery* battery;
 	Mouse* mouse;
 
-	class Vuz   // вложенный класс
+	class Touchpad
 	{
-		string Name;
+		string type;
+		double area;
 	public:
-		Vuz()
+		Touchpad()
 		{
-			Name = "Politex";
+			type = "Default";
+			area = 0.0;
 		}
-		Vuz(const char* N)
+		Touchpad(const char* N, double A)
 		{
-			Name = N;
+			type = N;
+			area = A;
 		}
 		void Show()
 		{
-			cout << Name << endl;
+			cout << "Touchpad type: " << type << "   Area " << area << endl;
 		}
 	};
-	Vuz vloj;
+	Touchpad touchpad;
 public:
-	////  prototype 
-	Student();
-	Student(const char*, int, const char* vuz); // construct by 2 param
-	~Student();
+	Laptop():model(nullptr),cpu(nullptr,0), monitor(0,0), ram(nullptr), video(nullptr), battery(nullptr), mouse(nullptr) {}
+	Laptop(const char* m, const char* manu, int g, int res, int d, RAM* r, VideoCard* v, Battery* b, Mouse* s, const char* t, double a) : cpu(manu,g), monitor(res, d), ram(r), video(v), battery(b), mouse(s), touchpad(t,a)
+	{
+		model = new char[strlen(m) + 1];
+		strcpy_s(model, strlen(m) + 1, m);
+	}
+	~Laptop()
+	{
+		delete[] model;
+	}
+
+	void Show()
+	{
+		cout << "Laptop model: " << model << endl;
+		cpu.Show();
+		monitor.Show();
+		ram->Show();
+		video->Show();
+		battery->Show();
+		mouse->Show();
+		touchpad.Show();
+	}
 
 };
-Student::Student()
-{
-	name = nullptr;
-	age = 0;
-}
-Student::Student(const char* Name, int Age, const char* vuz) : vloj(vuz)
-{
-	name = new char[strlen(Name) + 1];
-	strcpy_s(name, strlen(Name) + 1, Name);
-	age = Age;
 
-}
-Student::~Student()
+int main()
 {
-	if (name != nullptr)
-	{
-		delete[] name;
-	}
-	cout << "Destruct\n";
+	RAM myRAM{ 16.0, 3200 };
+	VideoCard myVideo{ "RTX 3060", 6.0 };
+	Battery myBattery{ "BatteryModel", 3.7 };
+	Mouse myMouse {"Logitech", 3};
+	Laptop myLaptop("Dell XPS", "Intel", 11, 1920, 15, &myRAM, &myVideo, &myBattery, &myMouse, "Precision", 12.5);
+	myLaptop.Show();
 
+	return 0;
 }
